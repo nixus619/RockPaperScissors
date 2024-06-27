@@ -34,6 +34,48 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
+const buttons = document.querySelectorAll("button");
+const result = document.querySelector("#result");
+const series = document.querySelector("#series");
+const seriesText = document.querySelector("#seriesText");
+
+let humanScore = 0;
+let computerScore = 0;
+let tieScore = 0;
+let counter = 0;
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let comp = getComputerChoice();
+        let resultGame = playRound(button.id,comp);
+        if(resultGame == 'human'){
+            result.textContent= "You won";
+            humanScore++;
+        } else if (resultGame == 'computer') {
+            result.textContent = "You lost";
+            computerScore++;
+        } else {
+            result.textContent = "Tie Game";
+            tieScore++;
+        }
+        series.textContent = humanScore + "-" + computerScore + "-" + tieScore;
+        if(computerScore==5) {
+            seriesText.textContent = "The series was:"
+            series.textContent = humanScore + "-" + computerScore + "-" + tieScore + " Computer";
+            buttons.forEach(elemn => {
+                elemn.disabled = true;
+            });
+        }
+        if (humanScore==5) {
+            seriesText.textContent = "The series was:"
+            series.textContent = humanScore + "-" + computerScore + "-" + tieScore + " Human";
+            buttons.forEach(elemn => {
+                elemn.disabled = true;
+            });
+        }
+    });
+})
+
+//Old functions and code below - no longer necessary
 function playGame() {
     let humanScore = 0;
     let computerScore = 0;
@@ -53,7 +95,7 @@ function playGame() {
                 computerScore++;
             } else {
                 alert("Tie Game");
-                tieScore++
+                tieScore++;
             }
             counter++;
         }
@@ -68,6 +110,7 @@ function playGame() {
         + computerScore + ". Number of ties: " + tieScore);
     }
 }
+
 
 /*const computerChoice = getComputerChoice();
 const humanChoice = getHumanChoice();
@@ -85,4 +128,4 @@ if(result == 'human'){
     console.log("Tie Game");
     tieScore++
 }*/
-playGame()
+//playGame()
